@@ -50,3 +50,61 @@ plt.plot(n,xn)
 
 plt.tight_layout()
 plt.show()
+
+
+or,
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Signal parameters
+A1, A2, A3 = 3, 5, 10
+f1, f2, f3 = 1000, 3000, 6000  # Frequencies in Hz
+t_max = 0.005  # short time window
+
+# Define sampling rates
+sampling_rates = [16000, 12000, 8000]  # >Nyquist, Nyquist, <Nyquist
+
+# High-resolution time vector (for original signal)
+t_cont = np.linspace(0, t_max, 10000)
+x_cont = A1 * np.cos(2*np.pi*f1*t_cont) + A2 * np.sin(2*np.pi*f2*t_cont) + A3 * np.cos(2*np.pi*f3*t_cont)
+
+# Plotting
+plt.figure(figsize=(12, 8))
+
+# Plot original continuous signal
+plt.subplot(4, 1, 1)
+plt.plot(t_cont, x_cont)
+plt.title('Original Analog Signal')
+plt.ylabel('Amplitude')
+plt.grid(True)
+
+
+high_t = np.linspace(0, t_max, int(16000*t_max))
+high_sampled = A1*np.cos(2*np.pi*f1*high_t)+ A2 * np.sin(2*np.pi*f2*high_t) + A3 * np.cos(2*np.pi*f3*high_t)
+
+plt.subplot(4,1,2)
+plt.stem(high_t,high_sampled)
+
+high_t = np.linspace(0, t_max, int(16000*t_max))
+high_sampled = A1*np.cos(2*np.pi*f1*high_t)+ A2 * np.sin(2*np.pi*f2*high_t) + A3 * np.cos(2*np.pi*f3*high_t)
+
+
+
+
+# Sample and plot for each sampling rate
+# for i, fs in enumerate(sampling_rates):
+#     n = np.arange(0, t_max, 1/fs)  # sample indices
+#     x_sampled = A1 * np.cos(2*np.pi*f1*n) + A2 * np.sin(2*np.pi*f2*n) + A3 * np.cos(2*np.pi*f3*n)
+
+#     plt.subplot(len(sampling_rates)+1, 1, i+2)
+#     plt.stem(n, x_sampled)
+#     plt.title(f'Sampled Signal at {fs} Hz')
+#     plt.ylabel('Amplitude')
+#     plt.grid(True)
+
+# plt.xlabel('Time [s]')
+# plt.tight_layout()
+plt.show()
+
