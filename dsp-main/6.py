@@ -56,3 +56,57 @@ plt.ylabel('Amplitude')
 plt.title('y(n) = x(n) * h(n)')
 plt.tight_layout()
 plt.show()
+
+or, 
+
+## 🐍 Python Code with Documentation
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Step 1: Define the unit step function
+def unit_step(n):
+    """Generates unit step signal u(n)"""
+    return np.array([1 if i >= 0 else 0 for i in n])
+
+# Step 2: Define the range of n
+n = np.arange(0, 11)  # We compute for 20 samples to see output behavior
+
+# Step 3: Define x[n] = u(n)
+x = unit_step(n)
+
+# Step 4: Define h[n] = u(n) - u(n-5) => rectangular pulse of 5 samples
+h = unit_step(n) - unit_step(n - 5)
+
+# Step 5: Perform convolution: y[n] = x[n] * h[n]
+y = np.convolve(x, h)
+
+# Step 6: Define time index for output
+n_y = np.arange(0, len(y))
+
+# Step 7: Plot x[n], h[n], and y[n]
+plt.figure(figsize=(14, 6))
+
+plt.subplot(3, 1, 1)
+plt.stem(n, x, basefmt=" ")
+plt.title("Input x[n] = u(n)")
+plt.xlabel("n")
+plt.ylabel("x[n]")
+plt.grid(True)
+
+plt.subplot(3, 1, 2)
+plt.stem(n, h, basefmt=" ")
+plt.title("Impulse Response h[n] = u(n) - u(n-5)")
+plt.xlabel("n")
+plt.ylabel("h[n]")
+plt.grid(True)
+
+plt.subplot(3, 1, 3)
+plt.stem(n_y, y)
+plt.title("Output y[n] = x[n] * h[n]")
+plt.xlabel("n")
+plt.ylabel("y[n]")
+plt.grid(True)
+
+plt.tight_layout()
+plt.show()
+
