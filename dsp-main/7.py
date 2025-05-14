@@ -63,3 +63,46 @@ plt.title('yn(n) = y(n) . z(n)')
 
 plt.tight_layout()
 plt.show()
+
+or,
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define the discrete-time sequences
+x = np.array([1, 3, -2, 4])
+y = np.array([2, 3, -1, 3])
+z = np.array([2, -1, 4, -2])
+
+# Full cross-correlation gives result from lag = -(N-1) to (N-1)
+r_xy = np.correlate(x, y, mode='full')  # correlation between x and y
+r_yz = np.correlate(y, z, mode='full')  # correlation between y and z
+
+# Define Lag Ranges
+lags = np.arange(-len(x)+1, len(x))  # same for all three (length 4)
+
+#Plot the Results
+plt.figure(figsize=(12, 5))
+
+# Plot r_xy
+plt.subplot(1, 2, 1)
+plt.stem(lags, r_xy, basefmt=" ")
+plt.title("Cross-Correlation: x(n) vs y(n)")
+plt.xlabel("Lag")
+plt.axvline(color='red')
+plt.axhline(color='red')
+plt.ylabel("Correlation")
+plt.grid(True)
+
+# Plot r_yz
+plt.subplot(1, 2, 2)
+plt.stem(lags, r_yz, basefmt=" ")
+plt.title("Cross-Correlation: y(n) vs z(n)")
+plt.xlabel("Lag")
+plt.ylabel("Correlation")
+plt.axvline(color='red')
+plt.axhline(color='red')
+plt.grid(True)
+
+plt.tight_layout()
+plt.show()
